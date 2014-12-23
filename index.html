@@ -62,8 +62,6 @@
 		<div class="row">
 			<div class="col-sm-9">
 <!-- Start Sheetsee -->
-
- <!-- End Sheetsee -->
 <div id="map"></div>
 <script type="text/javascript">
   document.addEventListener('DOMContentLoaded', function() {
@@ -78,7 +76,7 @@
     var template = "<ul><li><b>Date: </b>{{date}}</li>"
     			+ "<li><b>Party#1: </b>{{party1}}</li>"
     			+ "<li><b>Party#2: </b>{{party2}}</li>"
-    			+ "<li><b>Party#3:</b>{{party2}}</li>"
+    			+ "<li><b>Party#3: </b>{{party3}}</li>"
     			+ "<li><b>Category:</b> {{securitycategory1}}"
     			+ "<li><br>For further details contact:<br>sec-analyst@southsudanngoforum.org</li></ul>"
     var geoJSON = Sheetsee.createGeoJSON(gData, optionsJSON)
@@ -87,6 +85,7 @@
     var markerLayer = Sheetsee.addMarkerLayer(geoJSON, map, template)
   }
 </script>
+<!-- End Sheetsee -->
 <!-- second -->
 		</div>
 		 <div class="col-sm-3">
