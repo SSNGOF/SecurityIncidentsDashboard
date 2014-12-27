@@ -85,11 +85,9 @@
     var geoJSON = Sheetsee.createGeoJSON(gData, optionsJSON)
     var map = Sheetsee.loadMap("map")
 
-    
-
-    // Sheetsee.addTileLayer(map, 'examples.map-20v6611k')
+    //old mapbox layer Sheetsee.addTileLayer(map, 'examples.map-20v6611k')
     var hot = L.tileLayer('http://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-      attribution: '',
+      attribution: 'HOT OSM',
       boxZoom: true,
       touchZoom: true,
       scrollWheelZoom: true
@@ -98,8 +96,6 @@
     L.control.fullscreen().addTo(map);    
   }
 </script>
-<!-- End Sheetsee -->
-<!-- second -->
 		</div>
 		 <div class="col-sm-3">
      <img src="logo.png" class="img-responsive" alt="South Sudan NGO Forum">
