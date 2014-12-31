@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Security Incidents Dashboard</title>
 
-	<!-- Bootstrap -->
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<!-- Sheetsee -->
-	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js'></script>
-	<script type='text/javascript' src='js/tabletop1.3.4.js'></script>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Security Incidents Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Sheetsee -->
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js'></script>
+    <script type='text/javascript' src='js/tabletop1.3.4.js'></script>
     <script type='text/javascript' src='js/sheetsee.js'></script>
-    <link rel='stylesheet' type='text/css' href='http://api.tiles.mapbox.com/mapbox.js/v1.0.0/mapbox.css'  />
+    <link rel='stylesheet' type='text/css' href='http://api.tiles.mapbox.com/mapbox.js/v1.0.0/mapbox.css' />
 
     <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.3/Leaflet.fullscreen.min.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.3/leaflet.fullscreen.css' rel='stylesheet' />
@@ -21,123 +22,167 @@
 </head>
 
 <style>
-    #map, #shapesmap {max-width: 100%; height: 700px;}
-    .leaflet-popup-content li {list-style:none;}
-    .leaflet-popup-content {width: 220px;}
-    .leaflet-popup-content img {width: 100px;}
-    a {border: none;}
-  </style>
+#map,
+#shapesmap {
+    max-width: 100%;
+    height: 700px;
+}
+.leaflet-popup-content li {
+    list-style: none;
+}
+.leaflet-popup-content {
+    width: 220px;
+}
+.leaflet-popup-content img {
+    width: 100px;
+}
+a {
+    border: none;
+}
+</style>
 
 <body>
 
-<!-- navbar start -->
-<nav class="navbar navbar-inverse" role="navigation" style="background-color:#6C4D80">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#" style="color:white;">South Sudan NGO Forum - Security Incidents Dashboard</a>
+    <!-- navbar start -->
+    <nav class="navbar navbar-inverse" role="navigation" style="background-color:#6C4D80">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" style="color:white;">South Sudan NGO Forum - Security Incidents Dashboard</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:white;">Other Dashboards <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="http://ssngof.github.io/AccessIncidentsDashboard/">Access Incidents</a>
+                            </li>
+                            <li><a href="http://ssngof.github.io/OperationalPresence3W/">Operational Presence 3W</a>
+                            </li>
+                            <li><a href="http://ssngof.github.io/INGO-CD-Contacts">INGO CD Contacts</a>
+                            </li>
+                            <li><a href="http://ssngof.github.io/NNGO-CD-Contacts">NNGO CD Contacts</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <!-- navbar end  -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-9">
+                <!-- Start Sheetsee -->
+                <div id="map"></div>
+                <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', function() {
+                    var gData
+                    var URL = "1kJvYt3FjlCoQJb9SKKsklpmSYTwC0HHuLCrxi0D1-Vg"
+                    Tabletop.init({
+                        key: URL,
+                        callback: showInfo,
+                        simpleSheet: true
+                    })
+                })
+
+                function showInfo(data) {
+                    gData = data
+                    var optionsJSON = ["date", "party1", "party2", "party3", "securitycategory1"]
+                    var template = "<ul><li><b>Date: </b>{{date}}</li>" + "<li><b>Party#1: </b>{{party1}}</li>" + "<li><b>Party#2: </b>{{party2}}</li>" + "<li><b>Party#3: </b>{{party3}}</li>" + "<li><b>Category:</b> {{securitycategory1}}" + "<li><br>For further details contact:<br>sec-analyst@southsudanngoforum.org</li></ul>"
+                    var geoJSON = Sheetsee.createGeoJSON(gData, optionsJSON)
+                    var map = Sheetsee.loadMap("map")
+
+                    //old mapbox layer Sheetsee.addTileLayer(map, 'examples.map-20v6611k')
+                    var hot = L.tileLayer('http://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+                        attribution: 'HOT OSM',
+                        boxZoom: true,
+                        touchZoom: true,
+                        scrollWheelZoom: true
+                    }).addTo(map);
+                    var markerLayer = Sheetsee.addMarkerLayer(geoJSON, map, template)
+                    L.control.fullscreen().addTo(map);
+                }
+                </script>
+            </div>
+            <div class="col-sm-3">
+                <img src="logo.png" class="img-responsive" alt="South Sudan NGO Forum">
+                <div>
+                    <p>This map shows Security Incidents collected by the Secretariat. Click individidual marker for incident details.</p>
+                </div>
+
+                <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Show/Hide Incident Categories
+                </button>
+                <div class="collapse" id="collapseExample" style="margin-top: 10px; margin-bottom: 10px;">
+                    <div>
+                        <img src="Inter-communal Violence.png" class="img" alt="South Sudan NGO Forum"> <small>Inter-Communal Violence</small>
+                        <br>
+                        <img src="Intra-communal Violence.png" class="img" alt="South Sudan NGO Forum"> <small>Intra-Communal Violence</small>
+                        <br>
+                        <img src="Armed Conflict.png" class="img" alt="South Sudan NGO Forum"> <small>Armed Conflict</small>
+                        <br>
+                        <img src="Vehicle Theft.png" class="img" alt="South Sudan NGO Forum"> <small>Vehicle Theft</small>
+                        <br>
+                        <img src="Carjackings.png" class="img" alt="South Sudan NGO Forum"> <small>Carjacking</small>
+                        <br>
+                        <img src="Cattle Raiding.png" class="img" alt="South Sudan NGO Forum"> <small>Cattle Raiding</small>
+                        <br>
+                        <img src="Harrassment.png" class="img" alt="South Sudan NGO Forum"> <small>Harrassment</small>
+                        <br>
+                        <img src="Human Rights Abuse.png" class="img" alt="South Sudan NGO Forum"> <small>Human Rights Abuse</small>
+                        <br>
+                        <img src="Civil Disturbance.png" class="img" alt="South Sudan NGO Forum"> <small>Civil Disturbance</small>
+                        <br>
+                        <img src="Natural Disaster.png" class="img" alt="South Sudan NGO Forum"> <small>Natural Disaster</small>
+                        <br>
+                        <img src="Accident.png" class="img" alt="South Sudan NGO Forum"> <small>Accident</small>
+                        <br>
+                        <img src="UXOlandmine.png" class="img" alt="South Sudan NGO Forum"> <small>UXO/Landmine</small>
+                        <br>
+                        <img src="Gender-based Violence.png" class="img" alt="South Sudan NGO Forum"> <small>Gender-based Violence</small>
+                        <br>
+                        <img src="KidnappingAbduction.png" class="img" alt="South Sudan NGO Forum"> <small>Kidnapping/Abduction</small>
+                        <br>
+                        <img src="Detention.png" class="img" alt="South Sudan NGO Forum"> <small>Detention</small>
+                        <br>
+                        <img src="Convoy Robbery.png" class="img" alt="South Sudan NGO Forum"> <small>Convoy Robbery</small>
+                        <br>
+                        <img src="Compound Robbery.png" class="img" alt="South Sudan NGO Forum"> <small>Compound Robbery</small>
+                        <br>
+                        <img src="Armed Attack.png" class="img" alt="South Sudan NGO Forum"> <small>Armed Attack</small>
+                        <br>
+                        <img src="Damage to FacilitiesPropertyAssets.png" class="img" alt="South Sudan NGO Forum"> <small>Damage to Facilities/Property/Assets</small>
+                        <br>
+                        <img src="Other Crime.png" class="img" alt="South Sudan NGO Forum"> <small>Other Crime</small>
+                        <br>
+                    </div>
+                </div>
+                <div style="margin-top: 10px; margin-bottom: 10px;">
+                    <p>For feature requests or help improving this tool contact: <a href="mailto:infomgr@southsudanngoforum.org" target="_top">infomgr@southsudanngoforum.org</a>
+                    </p>
+                </div>
+                <a target="_blank" href="http://southsudanngoforum.org/security-incident-reporting-form/">
+                    <button type="button" class="btn btn-primary btn-block">Report an Incident</button>
+                </a>
+
+            </div>
+        </div>
     </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:white;">Other Dashboards <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="http://ssngof.github.io/AccessIncidentsDashboard/">Access Incidents</a></li>
-            <li><a href="http://ssngof.github.io/OperationalPresence3W/">Operational Presence 3W</a></li>
-            <li><a href="http://ssngof.github.io/INGO-CD-Contacts">INGO CD Contacts</a></li>
-            <li><a href="http://ssngof.github.io/NNGO-CD-Contacts">NNGO CD Contacts</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-<!-- navbar end  -->
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-9">
-<!-- Start Sheetsee -->
-<div id="map"></div>
-<script type="text/javascript">
-  document.addEventListener('DOMContentLoaded', function() {
-    var gData
-    var URL = "1kJvYt3FjlCoQJb9SKKsklpmSYTwC0HHuLCrxi0D1-Vg"
-    Tabletop.init( { key: URL, callback: showInfo, simpleSheet: true } )
-  })
-
-  function showInfo(data) {
-    gData = data
-    var optionsJSON = ["date", "party1","party2","party3", "securitycategory1"]
-    var template = "<ul><li><b>Date: </b>{{date}}</li>"
-    			+ "<li><b>Party#1: </b>{{party1}}</li>"
-    			+ "<li><b>Party#2: </b>{{party2}}</li>"
-    			+ "<li><b>Party#3: </b>{{party3}}</li>"
-    			+ "<li><b>Category:</b> {{securitycategory1}}"
-    			+ "<li><br>For further details contact:<br>sec-analyst@southsudanngoforum.org</li></ul>"
-    var geoJSON = Sheetsee.createGeoJSON(gData, optionsJSON)
-    var map = Sheetsee.loadMap("map")
-
-    //old mapbox layer Sheetsee.addTileLayer(map, 'examples.map-20v6611k')
-    var hot = L.tileLayer('http://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-      attribution: 'HOT OSM',
-      boxZoom: true,
-      touchZoom: true,
-      scrollWheelZoom: true
-    }).addTo(map);
-    var markerLayer = Sheetsee.addMarkerLayer(geoJSON, map, template)
-    L.control.fullscreen().addTo(map);    
-  }
-</script>
-		</div>
-		 <div class="col-sm-3">
-     <img src="logo.png" class="img-responsive" alt="South Sudan NGO Forum">
-      <div><p>This map shows Security Incidents collected by the Secretariat. Click individidual marker for incident details.</p></div>
-      
-     <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Show/Hide Incident Categories
-     </button>
-     <div class="collapse" id="collapseExample"  style="margin-top: 10px;
-margin-bottom: 10px;">
-       <div>
-         <img src="Inter-communal Violence.png" class="img" alt="South Sudan NGO Forum"> <small>Inter-Communal Violence</small><br>
-         <img src="Intra-communal Violence.png" class="img" alt="South Sudan NGO Forum"> <small>Intra-Communal Violence</small><br>
-         <img src="Armed Conflict.png" class="img" alt="South Sudan NGO Forum"> <small>Armed Conflict</small><br>
-         <img src="Vehicle Theft.png" class="img" alt="South Sudan NGO Forum"> <small>Vehicle Theft</small><br>
-         <img src="Carjackings.png" class="img" alt="South Sudan NGO Forum"> <small>Carjacking</small><br>
-         <img src="Cattle Raiding.png" class="img" alt="South Sudan NGO Forum"> <small>Cattle Raiding</small><br>
-         <img src="Harrassment.png" class="img" alt="South Sudan NGO Forum"> <small>Harrassment</small><br>
-         <img src="Human Rights Abuse.png" class="img" alt="South Sudan NGO Forum"> <small>Human Rights Abuse</small><br>
-         <img src="Civil Disturbance.png" class="img" alt="South Sudan NGO Forum"> <small>Civil Disturbance</small><br>
-         <img src="Natural Disaster.png" class="img" alt="South Sudan NGO Forum"> <small>Natural Disaster</small><br>
-         <img src="Accident.png" class="img" alt="South Sudan NGO Forum"> <small>Accident</small><br>
-         <img src="UXOlandmine.png" class="img" alt="South Sudan NGO Forum"> <small>UXO/Landmine</small><br>
-         <img src="Gender-based Violence.png" class="img" alt="South Sudan NGO Forum"> <small>Gender-based Violence</small><br>
-         <img src="KidnappingAbduction.png" class="img" alt="South Sudan NGO Forum"> <small>Kidnapping/Abduction</small><br>
-         <img src="Detention.png" class="img" alt="South Sudan NGO Forum"> <small>Detention</small><br>
-         <img src="Convoy Robbery.png" class="img" alt="South Sudan NGO Forum"> <small>Convoy Robbery</small><br>
-         <img src="Compound Robbery.png" class="img" alt="South Sudan NGO Forum"> <small>Compound Robbery</small><br>
-         <img src="Armed Attack.png" class="img" alt="South Sudan NGO Forum"> <small>Armed Attack</small><br>
-         <img src="Damage to FacilitiesPropertyAssets.png" class="img" alt="South Sudan NGO Forum"> <small>Damage to Facilities/Property/Assets</small><br>
-         <img src="Other Crime.png" class="img" alt="South Sudan NGO Forum"> <small>Other Crime</small><br>
-       </div>
-     </div>
-      <div style="margin-top: 10px;
-margin-bottom: 10px;"><p>For feature requests or help improving this tool contact Brian <a href="mailto:infomgr@southsudanngoforum.org" target="_top">infomgr@southsudanngoforum.org</a></p></div>
-      <a target="_blank" href="http://southsudanngoforum.org/security-incident-reporting-form/"><button type="button" class="btn btn-primary btn-block">Report an Incident</button></a>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap.min.js"></script>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
 </body>
+
 </html>
