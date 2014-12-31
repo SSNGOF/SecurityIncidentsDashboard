@@ -99,7 +99,7 @@ a {
                 function showInfo(data) {
                     gData = data
                     var optionsJSON = ["date", "party1", "party2", "party3", "securitycategory1"]
-                    var template = "<ul><li><b>Date: </b>{{date}}</li>" + "<li><b>Party#1: </b>{{party1}}</li>" + "<li><b>Party#2: </b>{{party2}}</li>" + "<li><b>Party#3: </b>{{party3}}</li>" + "<li><b>Category:</b> {{securitycategory1}}" + "<li><br>For further details contact:<br>sec-analyst@southsudanngoforum.org</li></ul>"
+                    var template = "<ul><li><b>Date: </b>{{date}}</li>" + "<li><b>Party#1: </b>{{party1}}</li>" + "<li><b>Party#2: </b>{{party2}}</li>" + "<li><b>Party#3: </b>{{party3}}</li>" + "<li><b>Category:</b> {{securitycategory1}}</ul>"
                     var geoJSON = Sheetsee.createGeoJSON(gData, optionsJSON)
                     var map = Sheetsee.loadMap("map")
 
@@ -166,6 +166,10 @@ a {
                         <img src="Other Crime.png" class="img" alt="South Sudan NGO Forum"> <small>Other Crime</small>
                         <br>
                     </div>
+                </div>
+                <div style="margin-top: 10px; margin-bottom: 10px;">
+                  <p>For detailed incident specifics contact: <a href="sec-analyst@southsudanngoforum.org">sec-analyst@southsudanngoforum.org</a>
+                  </p>
                 </div>
                 <div style="margin-top: 10px; margin-bottom: 10px;">
                     <p>For feature requests or help improving this tool contact: <a href="mailto:infomgr@southsudanngoforum.org" target="_top">infomgr@southsudanngoforum.org</a>
