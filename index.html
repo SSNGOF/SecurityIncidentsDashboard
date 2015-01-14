@@ -13,7 +13,11 @@
     <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js'></script>
     <script type='text/javascript' src='js/tabletop1.3.4.js'></script>
     <script type='text/javascript' src='js/sheetsee.js'></script>
+    <script type="text/javascript" src='js/leaflet.markercluster.js'></script>
     <link rel='stylesheet' type='text/css' href='http://api.tiles.mapbox.com/mapbox.js/v1.0.0/mapbox.css' />
+
+    <link rel="stylesheet" href="css/MarkerCluster.css" />
+    <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
 
     <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.3/Leaflet.fullscreen.min.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.3/leaflet.fullscreen.css' rel='stylesheet' />
@@ -102,7 +106,6 @@ a {
                     var template = "<ul><li><b>Date: </b>{{date}}</li>" + "<li><b>Party#1: </b>{{party1}}</li>" + "<li><b>Party#2: </b>{{party2}}</li>" + "<li><b>Party#3: </b>{{party3}}</li>" + "<li><b>Category:</b> {{securitycategory1}}</ul>"
                     var geoJSON = Sheetsee.createGeoJSON(gData, optionsJSON)
                     var map = Sheetsee.loadMap("map")
-
                     //old mapbox layer Sheetsee.addTileLayer(map, 'examples.map-20v6611k')
                     var hot = L.tileLayer('http://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
                         attribution: 'HOT OSM',
