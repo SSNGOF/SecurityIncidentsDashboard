@@ -102,7 +102,7 @@ a {
 
                 function showInfo(data) {
                     gData = data
-                    var optionsJSON = ["date", "party1", "party2", "party3", "securitycategory1"]
+                    var optionsJSON = ["date", "party1", "party2", "party3", "securitycategory1", "details"]
                     var template = "<ul><li><b>Date: </b>{{date}}</li>" + "<li><b>Party#1: </b>{{party1}}</li>" + "<li><b>Party#2: </b>{{party2}}</li>" + "<li><b>Party#3: </b>{{party3}}</li>" + "<li><b>Category:</b> {{securitycategory1}}</li>" + "<li><b>Details:</b> {{DETAILS}}</li></ul>"
                     var geoJSON = Sheetsee.createGeoJSON(gData, optionsJSON)
                     var map = Sheetsee.loadMap("map")
